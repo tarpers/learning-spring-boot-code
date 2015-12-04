@@ -2,6 +2,7 @@ package learningspringboot;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.actuate.metrics.CounterService;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jms.JmsProperties;
 import org.springframework.context.annotation.Bean;
@@ -39,8 +40,8 @@ public class NetworkManagerApplication {
     }
 
     @Bean
-    NetworkEventSimulator simulator(JmsTemplate jmsTemplate) {
-        return new NetworkEventSimulator(jmsTemplate, MAILBOX);
+    NetworkEventSimulator simulator(JmsTemplate jmsTemplate, CounterService counterService) {
+        return new NetworkEventSimulator(jmsTemplate, MAILBOX, counterService);
     }
 
     public static void main(String[] args) {
