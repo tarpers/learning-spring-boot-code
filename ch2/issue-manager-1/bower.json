@@ -1,0 +1,25 @@
+{
+  "name": "issue-manager",
+  "authors": [
+    "simon.tarplin <simon.tarplin@gamesys.co.uk>"
+  ],
+  "description": "Learning Spring Boot - Issue Manager",
+  "main": "",
+  "moduleType": [
+    "amd"
+  ],
+  "license": "ASL",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/main/resources/public/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery-mobile-bower": "~1.4.5"
+  }
+}

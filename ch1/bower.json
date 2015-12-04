@@ -1,0 +1,25 @@
+{
+  "name": "app_with_bower",
+  "authors": [
+    "simon.tarplin <simon.tarplin@gamesys.co.uk>"
+  ],
+  "description": "Learning Spring Boot - bower sample",
+  "main": "",
+  "moduleType": [
+    "amd"
+  ],
+  "license": "ASL",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4"
+  }
+}
