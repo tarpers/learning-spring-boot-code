@@ -11,7 +11,6 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot' 
 
@@ -39,14 +38,10 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test') 
 }
 
-
-eclipse {
-    classpath {
-         containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
-         containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
-    }
-}
-
 task wrapper(type: Wrapper) {
     gradleVersion = '2.7'
+}
+
+tasks.withType(org.springframework.boot.gradle.run.BootRunTask) {
+    systemProperty('github.token', project.gradle.startParameter.systemPropertiesArgs['github.token'])
 }
