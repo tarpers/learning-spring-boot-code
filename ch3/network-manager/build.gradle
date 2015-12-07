@@ -43,6 +43,7 @@ dependencies {
     compile("org.apache.activemq:activemq-broker")
     compile("org.springframework.boot:spring-boot-actuator")
     compile("org.springframework.boot:spring-boot-starter-web")
+    compile 'org.springframework.boot:spring-boot-starter-remote-shell'
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
