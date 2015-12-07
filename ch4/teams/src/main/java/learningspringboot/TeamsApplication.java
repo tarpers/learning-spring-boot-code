@@ -17,7 +17,7 @@ public class TeamsApplication {
         SpringApplication.run(TeamsApplication.class, args);
     }
 
-    @Autowired
+    @Autowired(required = false)
     DatabaseLoader databaseLoader;
 
     @Autowired
