@@ -18,6 +18,9 @@ public class TeamsApplication {
     }
 
     @Autowired
+    DatabaseLoader databaseLoader;
+
+    @Autowired
     TeammateRepository teammateRepository;
 
     @PostConstruct
