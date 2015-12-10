@@ -3,6 +3,8 @@
     <title>Learning Spring Boot - Chapter 5</title>
 </head>
 <body>
+    <div th:include="_links :: security" />
+
     <h2 th:text="${teammate.firstName} + ' ' + ${teammate.lastName}"/>
     <h3 th:text="'Plays ' + ${teammate.position}"/>
 

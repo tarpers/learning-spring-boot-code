@@ -1,6 +1,9 @@
 package learningspringboot;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.StreamSupport;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
@@ -41,6 +46,7 @@ public class TeammateController {
                 ));
     }
 
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/teammates", method = RequestMethod.POST)
     public ModelAndView newTeammate(@ModelAttribute Teammate teammate) {
         // Save the newly created teammate
@@ -49,18 +55,27 @@ public class TeammateController {
         return getTeammates();
     }
 
+    @Secured("ROLE_USER")
     @RequestMapping(value = "/teammate/{id}", method = RequestMethod.GET)
     public ModelAndView getTeammate(@PathVariable Long id) {
         // Look up the related teammate
+        ModelAndView modelAndView = new ModelAndView("teammate");
         final Teammate teammate = teammateRepository.findOne(id);
-        return new ModelAndView("teammate")
-                .addObject("teammate", teammate)
-                .addObject("links", Arrays.asList(
-                        linkTo(methodOn(TeammateController.class).getTeammates()).withRel("All Teammates"),
-                        linkTo(methodOn(TeammateController.class).editTeammate(id)).withRel("Edit")
-                ));
+        modelAndView.addObject("teammate", teammate);
+
+        List<Link> links = new ArrayList<>();
+        links.add(linkTo(methodOn(TeammateController.class).getTeammates()).withRel("All Teammates"));
+
+        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().anyMatch(
+                p -> p.getAuthority().equals("ROLE_ADMIN"))) {
+            links.add(linkTo(methodOn(TeammateController.class).editTeammate(id)).withRel("Edit"));
+        }
+
+        modelAndView.addObject("links", links);
+        return modelAndView;
     }
 
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/teammate/{id}", method = RequestMethod.PUT)
     public ModelAndView updateTeammate(@PathVariable Long id, @ModelAttribute Teammate teammate) {
         // Connect the new teammate info with the PUT {id}
@@ -70,6 +85,7 @@ public class TeammateController {
         return getTeammate(teammate.getId());
     }
 
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/teammate/{id}/edit", method = RequestMethod.GET)
     public ModelAndView editTeammate(@PathVariable Long id) {
         final Teammate teammate = teammateRepository.findOne(id);

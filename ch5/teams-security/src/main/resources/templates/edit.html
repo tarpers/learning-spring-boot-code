@@ -3,6 +3,8 @@
     <title>Learning Spring Boot - Chapter 5</title>
 </head>
 <body>
+    <div th:include="_links :: security" />
+
     <h2>Edit a teammate</h2>
 
     <form th:action="${putLink.href}" th:object="${teammate}" th:method="put">

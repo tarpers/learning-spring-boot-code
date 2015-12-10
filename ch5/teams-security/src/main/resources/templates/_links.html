@@ -1,4 +1,5 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <div th:fragment="nav">
     <h3>Links:</h3>
@@ -7,6 +8,22 @@
             <a th:href="${link.href}" th:text="${link.rel}"/>
         </li>
     </ul>
+</div>
+
+<div th:fragment="security">
+    <div>
+        <span sec:authentication="name"/> has
+        <span sec:authentication="authorities"/>
+        <div sec:authorize="isAuthenticated()">
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" value="Sign Out"/>
+            </form>
+        </div>
+        <div sec:authorize="isAnonymous()">
+            <a th:href="@{/login}" th:text="Sign In"></a>
+        </div>
+    </div>
+    <hr/>
 </div>
 
 </html>
